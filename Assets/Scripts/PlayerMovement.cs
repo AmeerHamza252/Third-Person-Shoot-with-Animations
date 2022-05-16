@@ -8,15 +8,15 @@ public class PlayerMovement : MonoBehaviour
     public float horizontal;
     public float vertical;
     private Rigidbody rb;
-   // private Animator animator;
-    private Vector3 movDir;
-    public GameObject projectilePrefab;
+    private Animator animator;
+    //private Vector3 movDir;
+    //public GameObject projectilePrefab;
   
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-       // animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
        
     }
 
@@ -24,26 +24,38 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        
-        Shoot();
-       
+
+        //Shoot();
+
     }
     private void HandleMovement()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(horizontal, 0, vertical);
         movement = movement.normalized * speed * Time.deltaTime;
         rb.MovePosition(transform.position + movement);
-      //  animator.SetFloat("Blend", movDir.x);
-    }
-    void Shoot()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        animator.SetFloat("Input Magnitude", horizontal);
+        animator.SetFloat("Input Magnitude2", vertical);
+        if (Input.GetKey(KeyCode.Q)
+            &&Input.GetKey(KeyCode.W)
+            )
         {
-            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+            animator.SetBool("running", true);
+        }
+        else {
+
+            animator.SetBool("running", false);
+        
         }
     }
-    
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+    //void Shoot()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+    //    }
+    //}
+
+
 }
